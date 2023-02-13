@@ -1,16 +1,16 @@
 package ntua.minesweeper;
 
-//import java.lang.System;
-	
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 //import javafx.event.ActionEvent;
 //import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-//import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+//import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 public class Main extends Application{
@@ -22,19 +22,29 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage stage) throws Exception{ //overrride the default start method from javafx
-		stage.setTitle("First JavaFX App");
-		/*button = new Button("Press me mr Sweller");
-		button.setOnAction(this); //look in this class for the handle method for what to do when i click the button
-		
-		StackPane layout = new StackPane();
-		layout.getChildren().add(button);
-		
-		Scene scene = new Scene(layout, 300, 250);
-		stage.setScene(scene);*/
-        Group root = new Group(); //create root node to arrange components in scene
-        Scene scene1 = new Scene(root,Color.BLACK); //add root node to the scene
+        //Group root = new Group(); //create root node to arrange components in scene
+        //Scene scene1 = new Scene(root, Color.BLACK); //add root node to the scene
 
-        stage.setScene(scene1); //add scene to the stage
+        Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+        Scene scene2 = new Scene(root);
+
+        //Text t = new Text();
+        //t.setText("fds");
+        //Image icon = new Image("swell.png"); //import and use image for title of the window, searches for image in src folder by default
+        //stage.getIcons().add(icon);
+
+        stage.setTitle("First JavaFX App");
+
+        //stage.setWidth(1000);
+        //stage.setHeight(500);
+        stage.setResizable(true); //makes window not resizable
+        //stage.setX(200); //sets where the window will appear
+        //stage.setY(300);
+        //stage.setFullScreen(true);
+        //stage.setFullScreenExitHint("ignorant sweller press w");
+        //stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("w"));
+
+        stage.setScene(scene2); //add scene to the stage
 		stage.show(); //always have this at the end so that the window appears
 	}
 }
