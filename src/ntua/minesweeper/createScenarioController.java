@@ -3,16 +3,19 @@ package ntua.minesweeper;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 
 import java.io.File;
 import java.io.FileWriter;
 
-public class popupController implements Initializable{
+public class createScenarioController implements Initializable{
 
     @FXML private TextField scenarioTextField;
     @FXML private ChoiceBox<String> difficultyChoiceBox;
@@ -30,7 +33,7 @@ public class popupController implements Initializable{
         supermineChoiceBox.getItems().addAll(supermine_list);
     }
 
-    public void createScenario() throws Exception{
+    public void createScenario(ActionEvent event) throws Exception{
         if (scenarioTextField.getText().isEmpty()
          || minesTextField.getText().isEmpty()
          || timeTextField.getText().isEmpty()
@@ -59,6 +62,9 @@ public class popupController implements Initializable{
         FileWriter output = new FileWriter("src/medialab/" + filename + ".txt");
         output.write(difficulty + "\n" + mines + "\n" + time + "\n" + supermine);
         output.close();
+
+        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
+
     }
 
 }

@@ -6,7 +6,6 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
    <children>
       <MenuBar prefHeight="20.0" prefWidth="600.0">
@@ -14,7 +13,7 @@
           <Menu mnemonicParsing="false" text="Application">
             <items>
                   <MenuItem fx:id="createButton" mnemonicParsing="false" onAction="#createScenario" text="Create" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
+                  <MenuItem fx:id="loadButton" mnemonicParsing="false" onAction="#loadScenario" text="Load" />
                   <MenuItem mnemonicParsing="false" text="Start" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem mnemonicParsing="false" text="Exit" />

@@ -25,4 +25,15 @@ public class mainController{
         createScenarioStage.setScene(createScenarioScene);
 		createScenarioStage.show();
     }
+
+    public void loadScenario() throws Exception{
+        Stage loadScenarioStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("loadScenarioScene.fxml"));
+        Scene loadScenarioScene = new Scene(root);
+
+        loadScenarioStage.setTitle("Load Scenario...");
+        loadScenarioStage.setResizable(false);
+        loadScenarioStage.setScene(loadScenarioScene);
+		loadScenarioStage.show();
+    }
 }
