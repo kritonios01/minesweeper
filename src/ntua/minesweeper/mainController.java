@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.stage.Stage;
 
 public class mainController{
@@ -36,4 +35,7 @@ public class mainController{
         loadScenarioStage.setScene(loadScenarioScene);
 		loadScenarioStage.show();
     }
+
+    //left and right click events are handled in the grid class
+
 }

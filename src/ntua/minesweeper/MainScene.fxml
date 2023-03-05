@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
+<AnchorPane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
    <children>
       <MenuBar prefHeight="20.0" prefWidth="600.0">
         <menus>
@@ -27,5 +31,35 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Label fx:id="totalminesLabel" layoutX="79.0" layoutY="44.0" prefHeight="33.0" prefWidth="44.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="mineImageView" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../media/bomb.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="170.0" layoutY="45.0" text="Time Left:">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeleftLabel" layoutX="302.0" layoutY="46.0" prefHeight="30.0" prefWidth="36.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="flagsLabel1" layoutX="535.0" layoutY="46.0" prefHeight="33.0" prefWidth="44.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="flagImageView" fitHeight="50.0" fitWidth="50.0" layoutX="472.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../media/flag2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

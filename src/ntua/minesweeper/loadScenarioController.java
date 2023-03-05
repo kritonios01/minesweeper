@@ -53,6 +53,7 @@ public class loadScenarioController {
 
 
 
+
         //Stage he = (Stage)((Node)event.getSource()).getScene().getWindow();
         //@FXML AnchorPane ap; Stage stage = (Stage) ap.getScene.getWindow();
         /////((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
