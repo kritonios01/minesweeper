@@ -2,13 +2,12 @@ package ntua.minesweeper.types;
 
 import java.util.Random;
 
-import javax.print.FlavorException;
-
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+
 
 public class Grid extends GridPane{
     //ola edw ginontai gia 11x11, prepei na ginei kai gia to easy
@@ -48,6 +47,7 @@ public class Grid extends GridPane{
 		}
     }
 
+//HANDLE WINNING
 
     //auto prepei na ginei me mia parametro sti klasi block kai oxi me array
     private void generateMinePositions() {

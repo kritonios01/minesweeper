@@ -40,9 +40,10 @@ public class loadScenarioController {
             System.out.println(supermine);*/
 
             inputFile.close();
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         }
         catch(FileNotFoundException e){
-            System.out.println("File not Found");//do sth about this
+            System.out.println("File not Found");//actually handle the exceptions
         }
         catch(InvalidDescriptionException e){
             System.out.println("File doesn't have 4 lines");
@@ -53,7 +54,7 @@ public class loadScenarioController {
 
 
 
-
+        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         //Stage he = (Stage)((Node)event.getSource()).getScene().getWindow();
         //@FXML AnchorPane ap; Stage stage = (Stage) ap.getScene.getWindow();
         /////((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window

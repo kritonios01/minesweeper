@@ -1,18 +1,18 @@
 package ntua.minesweeper;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.Node;
 import javafx.stage.Stage;
+import ntua.minesweeper.types.Grid;
 
 public class mainController{
-
+    @FXML AnchorPane myPane;
 
     public void createScenario() throws Exception{
         Stage createScenarioStage = new Stage();
@@ -36,6 +36,26 @@ public class mainController{
 		loadScenarioStage.show();
     }
 
-    //left and right click events are handled in the grid class
+    public void start(ActionEvent event) throws Exception{
+        Grid minesGrid = new Grid();
+        minesGrid.setLayoutX(0);
+        minesGrid.setLayoutY(110);
+        myPane.getChildren().add(minesGrid);
+    }
 
+    public void exit() throws Exception{
+        Stage exitStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("exitScene.fxml"));
+        //with the setcontrollerfactory we can manipulate the constructor of the exitcontroller class
+        loader.setControllerFactory(c -> {
+            return new exitController((Stage)myPane.getScene().getWindow());
+            });
+        Parent root = loader.load();
+        Scene exitScene = new Scene(root);
+
+        exitStage.setTitle("Load Scenario...");
+        exitStage.setResizable(false);
+        exitStage.setScene(exitScene);
+		exitStage.show();
+    }
 }
