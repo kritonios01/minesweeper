@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -25,7 +26,7 @@ public class mainController{
 		createScenarioStage.show();
     }
 
-    public void loadScenario() throws Exception{
+    public void loadScenario() throws Exception {
         Stage loadScenarioStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("loadScenarioScene.fxml"));
         Scene loadScenarioScene = new Scene(root);
@@ -36,11 +37,14 @@ public class mainController{
 		loadScenarioStage.show();
     }
 
-    public void start(ActionEvent event) throws Exception{
-        Grid minesGrid = new Grid();
+    public void start(ActionEvent event) throws Exception {
+
+
+        Grid minesGrid = new Grid(myPane);
         minesGrid.setLayoutX(0);
         minesGrid.setLayoutY(110);
         myPane.getChildren().add(minesGrid);
+
     }
 
     public void exit() throws Exception{
@@ -48,7 +52,7 @@ public class mainController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("exitScene.fxml"));
         //with the setcontrollerfactory we can manipulate the constructor of the exitcontroller class
         loader.setControllerFactory(c -> {
-            return new exitController((Stage)myPane.getScene().getWindow());
+                return new exitController((Stage)myPane.getScene().getWindow());
             });
         Parent root = loader.load();
         Scene exitScene = new Scene(root);

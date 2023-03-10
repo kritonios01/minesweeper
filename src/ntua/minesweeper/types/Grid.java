@@ -1,12 +1,18 @@
 package ntua.minesweeper.types;
 
+import java.util.List;
 import java.util.Random;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 
 public class Grid extends GridPane{
@@ -14,16 +20,23 @@ public class Grid extends GridPane{
     private final Block[][] blocks;
     private final boolean[][] MINEPOS;
     private final int MINES;
+    private final AnchorPane parentWindow;
 
-    public Grid() {
+    public Grid(AnchorPane x, List<Integer> scenario) {
         super();
         this.setPadding(new Insets(15));
         this.setHgap(2);
         this.setVgap(2);
+        if(scenario.get(0) == 1) {
+            this.blocks = new Block[9][9];
+            this.MINEPOS = new boolean[9][9];
+        }
+        else
         this.blocks = new Block[11][11];
         this.MINEPOS = new boolean[11][11];
         this.MINES = 10;
         this.generateGrid();
+        this.parentWindow = x;
     }
 
     private void generateGrid() {
@@ -70,10 +83,10 @@ public class Grid extends GridPane{
                 Image mineImage = new Image("media/mine.png", 30, 0, true, true);
                 block.setGraphic(new ImageView(mineImage));
                 //handle gameover
-                //Label lose = new Label("You lose");
-                //AnchorPane rootPane = (AnchorPane)mainScene.lookup("#myPane");
+                //handleGameover();
+                ///Resulttxt losetxt = new Resulttxt("You Lose!", Color.RED, parentWindow);
+                ///parentWindow.getChildren().add(losetxt);
 
-                //rootPane.getChildren().add(minesGrid);
             }
             else{
                 int adjacentMines = countAdjacentMines(row, column);

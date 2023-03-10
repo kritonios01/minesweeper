@@ -1,62 +1,39 @@
-package ntua.minesweeper;
+package ntua.minesweeper.types;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import ntua.minesweeper.exceptions.InvalidDescriptionException;
 import ntua.minesweeper.exceptions.InvalidValueException;
-import ntua.minesweeper.types.Scenario;
 
+public class Scenario {
+    public static String filename;
 
-import ntua.minesweeper.types.Scenario;
-
-public class loadScenarioController {
-    @FXML private TextField scenarioTextField;
-    @FXML private Button loadScenarioBox;
-
-
-    public void loadScenario(ActionEvent event) throws Exception{
-        String filename = new String(scenarioTextField.getText());
-        Scenario.filename = filename;
-        try{
-            Scenario id = Scenario.setScenario(filename);
-        }
-        catch(Exception e){
-            System.out.println("Error");
-        }
-    }
-    /*
     private int difficulty;
     private int mines;
     private int time;
     private int supermine;
 
-    public void loadScenario(ActionEvent event) throws Exception{
-        String filename = new String(scenarioTextField.getText());
+    public Scenario(int difficulty, int mines, int time, int supermine) {
+        this.difficulty = difficulty;
+        this.mines = mines;
+        this.time = time;
+        this.supermine = supermine;
+    }
 
+
+    public static Scenario setScenario(String input) throws IOException{
         try{
-            BufferedReader inputFile = new BufferedReader(new FileReader("src/medialab/" + filename + ".txt"));
+            BufferedReader inputFile = new BufferedReader(new FileReader("src/medialab/" + input + ".txt"));
 
-            checkAndAssign(checklines(inputFile)); //we check values iff there are 4 lines exactly
-
-            //!!!!these are testers. to be removed before submit
-            /*System.out.println(difficulty);
-            System.out.println(mines);
-            System.out.println(time);
-            System.out.println(supermine);
+            List<Integer> values = checkAndAssign(checklines(inputFile)); //we check values if there are 4 lines exactly
 
             inputFile.close();
-            ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+
+            return new Scenario(values.get(0).intValue(), values.get(1).intValue(), values.get(2).intValue(), values.get(3).intValue());
         }
         catch(FileNotFoundException e){
             System.out.println("File not Found");//actually handle the exceptions
@@ -68,18 +45,12 @@ public class loadScenarioController {
             System.out.println("Invalid Value Description");
         }
 
-
-
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-        //Stage he = (Stage)((Node)event.getSource()).getScene().getWindow();
-        //@FXML AnchorPane ap; Stage stage = (Stage) ap.getScene.getWindow();
-        /////((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
-        //maybe getters/setters for variables????
-        //ta throw prepei na einai atomika gia kathe metavliti kai oxi se ena megalo if
+        return null;
     }
 
+
     //checks if there are four lines exactly and returns a list of strings, each of which is a line
-    public List<String> checklines (BufferedReader x) throws InvalidDescriptionException, IOException{
+    public static List<String> checklines (BufferedReader x) throws InvalidDescriptionException, IOException{
         try{
             //tries to read each line, if a line doesn't exist NullPointerException is thrown
             List<String> lines = List.of(x.readLine(),
@@ -97,7 +68,12 @@ public class loadScenarioController {
     }
 
     //checks if values are within bounds and assignes each value to the corresponding variable
-    public void checkAndAssign(List<String> lines) throws InvalidValueException{
+    public static List<Integer> checkAndAssign(List<String> lines) throws InvalidValueException{
+        int difficulty = -1;
+        int mines = -1;
+        int time = -1;
+        int supermine = -1;
+
         String line1 = lines.get(0);
         String line2 = lines.get(1);
         String line3 = lines.get(2);
@@ -164,10 +140,7 @@ public class loadScenarioController {
                 }
                 break;
         }
-    }
 
-    public List<Integer> getScenario() { //returns an immutable list
         return List.of(difficulty, mines, time, supermine);
     }
-    */
 }
