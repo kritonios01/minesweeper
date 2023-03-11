@@ -9,6 +9,8 @@ import java.util.List;
 import ntua.minesweeper.exceptions.InvalidDescriptionException;
 import ntua.minesweeper.exceptions.InvalidValueException;
 
+
+//!!!! na xrisimopoihtei ayth h klash kai gia th dhmiourg;ia scenariou
 public class Scenario {
     public static String filename;
 
@@ -25,7 +27,7 @@ public class Scenario {
     }
 
 
-    public static Scenario setScenario(String input) throws IOException{
+    public static Scenario getScenario(String input) throws IOException{
         try{
             BufferedReader inputFile = new BufferedReader(new FileReader("src/medialab/" + input + ".txt"));
 
@@ -141,6 +143,10 @@ public class Scenario {
                 break;
         }
 
+        return List.of(difficulty, mines, time, supermine);
+    }
+
+    public List<Integer> getScenarioList(){
         return List.of(difficulty, mines, time, supermine);
     }
 }

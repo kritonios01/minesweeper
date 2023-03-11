@@ -29,12 +29,12 @@ public class loadScenarioController {
         String filename = new String(scenarioTextField.getText());
         Scenario.filename = filename;
         try{
-            Scenario id = Scenario.setScenario(filename);
+            Scenario id = Scenario.getScenario(filename);
+            System.out.println("All good!");;
         }
         catch(Exception e){
             System.out.println("Error");
         }
-    }
     /*
     private int difficulty;
     private int mines;
@@ -68,15 +68,16 @@ public class loadScenarioController {
             System.out.println("Invalid Value Description");
         }
 
-
+*/
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+    }
         //Stage he = (Stage)((Node)event.getSource()).getScene().getWindow();
         //@FXML AnchorPane ap; Stage stage = (Stage) ap.getScene.getWindow();
         /////((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
         //maybe getters/setters for variables????
         //ta throw prepei na einai atomika gia kathe metavliti kai oxi se ena megalo if
-    }
+    /* }
 
     //checks if there are four lines exactly and returns a list of strings, each of which is a line
     public List<String> checklines (BufferedReader x) throws InvalidDescriptionException, IOException{

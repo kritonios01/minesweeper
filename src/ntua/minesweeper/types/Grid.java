@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,37 +14,47 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 
+
+//prepei na ginei handle winning
 public class Grid extends GridPane{
     //ola edw ginontai gia 11x11, prepei na ginei kai gia to easy
-    private final Block[][] blocks;
+    private static Block[][] blocks;
     private final boolean[][] MINEPOS;
     private final int MINES;
+    private final int gridLength;
+    private int timeLeft;
     private final AnchorPane parentWindow;
 
     public Grid(AnchorPane x, List<Integer> scenario) {
         super();
-        this.setPadding(new Insets(15));
-        this.setHgap(2);
-        this.setVgap(2);
-        if(scenario.get(0) == 1) {
-            this.blocks = new Block[9][9];
-            this.MINEPOS = new boolean[9][9];
+        if(scenario.get(0) == 1){
+            this.gridLength = 9;
+            this.setPadding(new Insets(18));
+            this.setHgap(3);
+            this.setVgap(3);
         }
-        else
-        this.blocks = new Block[11][11];
-        this.MINEPOS = new boolean[11][11];
-        this.MINES = 10;
+        else{
+            this.gridLength = 11;
+            this.setPadding(new Insets(15));
+            this.setHgap(2);
+            this.setVgap(2);
+        }
+        blocks = new Block[gridLength][gridLength];
+        this.MINEPOS = new boolean[gridLength][gridLength];
+
+        this.MINES = scenario.get(1);
         this.generateGrid();
         this.parentWindow = x;
     }
 
     private void generateGrid() {
         generateMinePositions();
-        for (int i = 0; i < 11; i++) {
-			for (int j = 0; j < 11; j++) {
-				Block block = new Block();
+        for (int i = 0; i < gridLength; i++) {
+			for (int j = 0; j < gridLength; j++) {
+				Block block = new Block(gridLength);
 				final int row = i;
 				final int column = j;
 				block.setOnMouseClicked(event -> {
@@ -66,8 +77,8 @@ public class Grid extends GridPane{
     private void generateMinePositions() {
         Random random = new Random();
         for (int i = 0; i < MINES; i++) {
-            int row = random.nextInt(11);
-            int column = random.nextInt(11);
+            int row = random.nextInt(gridLength);
+            int column = random.nextInt(gridLength);
             if (MINEPOS[row][column]) {
                 i--;
             }
@@ -82,10 +93,8 @@ public class Grid extends GridPane{
             if (MINEPOS[row][column] == true) {
                 Image mineImage = new Image("media/mine.png", 30, 0, true, true);
                 block.setGraphic(new ImageView(mineImage));
-                //handle gameover
-                //handleGameover();
-                ///Resulttxt losetxt = new Resulttxt("You Lose!", Color.RED, parentWindow);
-                ///parentWindow.getChildren().add(losetxt);
+
+                Resulttxt.handleGameover(parentWindow);
 
             }
             else{
@@ -95,6 +104,7 @@ public class Grid extends GridPane{
                     adjacentReveal(row, column);
                 }
                 else{
+                    block.setFont(Font.font("Verdana", 20));
                     block.setText(Integer.toString(adjacentMines));
                     block.setDisable(true);
                 }
@@ -120,7 +130,7 @@ public class Grid extends GridPane{
             for (int j = -1; j <= 1; j++) {
                 int x = row + i;
                 int y = column + j;
-                if (x >= 0 && x < 11 && y >= 0 && y < 11 && MINEPOS[x][y] == true) {
+                if (x >= 0 && x < gridLength && y >= 0 && y < gridLength && MINEPOS[x][y] == true) {
                     count++;
                 }
             }
@@ -133,13 +143,14 @@ public class Grid extends GridPane{
             for (int j = -1; j <= 1; j++) {
                 int x = row + i;
                 int y = column + j;
-                if (x >= 0 && x < 11 && y >= 0 && y < 11 && !blocks[x][y].isDisabled() && !MINEPOS[x][y]) {
+                if (x >= 0 && x < gridLength && y >= 0 && y < gridLength && !blocks[x][y].isDisabled() && !MINEPOS[x][y]) {
                     blocks[x][y].setDisable(true);
                     int adjacentMines = countAdjacentMines(x, y);
                     if (adjacentMines == 0) {
                         adjacentReveal(x, y);
                     }
                     else{
+                        blocks[x][y].setFont(Font.font("Verdana", 20));
                         blocks[x][y].setText(Integer.toString(adjacentMines));
                     }
                 }
@@ -147,4 +158,20 @@ public class Grid extends GridPane{
         }
     }
 
+    public static void deleteBlocks(){
+        if(blocks != null){
+            GridPane parent = (GridPane)blocks[0][0].getParent();
+            if(parent != null){
+                for(int i = 0; i < blocks.length; i++) {
+                    for(int j = 0; j < blocks.length; j++) {
+                        //if(blocks[i][j] != null){
+                            parent.getChildren().remove(blocks[i][j]);
+                        //}
+                    }
+                }
+            }
+
+        }
+
+    }
 }

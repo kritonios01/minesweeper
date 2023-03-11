@@ -1,31 +1,34 @@
 package ntua.minesweeper.types;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-/*public class Resulttxt extends Text{
-    public Resulttxt(String s, Color c, Pane p){
-        super(s);
-
-        System.out.println(this.getwidth);
-        this.setX(p.getWidth()/2);// - this.getLayoutBounds().getWidth()/2);
-        this.setY(300);//p.getHeight()/2);
-        this.setFont(Font.font("Verdana", 50));
-        this.setFill(c);
-    }
-}*/
 
 public class Resulttxt extends Label{
-    public Resulttxt(String s, Color c, Pane p){
-        super(s);
+    public static Resulttxt currentLabel;
 
-        System.out.println(this.getWidth());
-        //this.setX(p.getWidth()/2);// - this.getLayoutBounds().getWidth()/2);
-        //this.setY(300);//p.getHeight()/2);
-        //this.setFont(Font.font("Verdana", 50));
-        //this.setFill(c);
+    public Resulttxt(String s, Color c, double winWidth, double winHeight){
+        super(s);
+        Platform.runLater(() -> { //this allows the label object to be fully rendered before its width is measured so we can get the correct result
+            this.setLayoutX(winWidth/2 - this.getWidth()/2);
+            this.setLayoutY(winHeight/2);
+        });
+        this.setFont(Font.font("Verdana", 70));
+        this.setTextFill(c);
+    }
+
+    public static void handleGameover(Pane p) {
+        currentLabel = new Resulttxt("You Lost!", Color.RED, p.getWidth(), p.getHeight());
+        p.getChildren().add(currentLabel);
+    }
+
+    public static void deleteLabel(){
+        if(currentLabel != null) {
+            Pane parent = (Pane)currentLabel.getParent();
+            parent.getChildren().remove(currentLabel);
+        }
     }
 }

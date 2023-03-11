@@ -5,9 +5,14 @@ import javafx.scene.control.Button;
 class Block extends Button{
     private boolean flagged;
 
-    public Block(){
+    public Block(int gridLength){
         super();
-        this.setPrefSize(50, 50);
+        if(gridLength == 9){
+            this.setPrefSize(60, 60);
+        }
+        else{
+            this.setPrefSize(50, 50);
+        }
         this.flagged = false;
     }
 

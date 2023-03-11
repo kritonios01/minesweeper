@@ -8,9 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import ntua.minesweeper.types.Grid;
+import ntua.minesweeper.types.Resulttxt;
+import ntua.minesweeper.types.Scenario;
 
 public class mainController{
     @FXML AnchorPane myPane;
@@ -38,12 +41,19 @@ public class mainController{
     }
 
     public void start(ActionEvent event) throws Exception {
+        Grid.deleteBlocks();
+        Resulttxt.deleteLabel();
+        try{
+            Scenario id = Scenario.getScenario(Scenario.filename);
+            Grid minesGrid = new Grid(myPane, id.getScenarioList());
+            minesGrid.setLayoutX(0);
+            minesGrid.setLayoutY(110);
+            myPane.getChildren().add(minesGrid);
+        }
+        catch(NullPointerException e){
+            System.out.println("You must load a scenario first");
+        }
 
-
-        Grid minesGrid = new Grid(myPane);
-        minesGrid.setLayoutX(0);
-        minesGrid.setLayoutY(110);
-        myPane.getChildren().add(minesGrid);
 
     }
 
