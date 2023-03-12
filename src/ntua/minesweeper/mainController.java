@@ -14,9 +14,11 @@ import javafx.stage.Stage;
 import ntua.minesweeper.types.Grid;
 import ntua.minesweeper.types.Resulttxt;
 import ntua.minesweeper.types.Scenario;
+import ntua.minesweeper.types.Time;
 
 public class mainController{
     @FXML AnchorPane myPane;
+    @FXML Label timeLeftLabel;
 
     public void createScenario() throws Exception{
         Stage createScenarioStage = new Stage();
@@ -43,8 +45,10 @@ public class mainController{
     public void start(ActionEvent event) throws Exception {
         Grid.deleteBlocks();
         Resulttxt.deleteLabel();
+        //na dw giati xreiazetai ayto to try-catch block
         try{
             Scenario id = Scenario.getScenario(Scenario.filename);
+            Time timer = new Time(id.getScenarioList().get(2), myPane, timeLeftLabel);
             Grid minesGrid = new Grid(myPane, id.getScenarioList());
             minesGrid.setLayoutX(0);
             minesGrid.setLayoutY(110);

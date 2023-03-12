@@ -25,6 +25,7 @@ public class Grid extends GridPane{
     private final boolean[][] MINEPOS;
     private final int MINES;
     private final int gridLength;
+
     private int timeLeft;
     private final AnchorPane parentWindow;
 
@@ -42,11 +43,13 @@ public class Grid extends GridPane{
             this.setHgap(2);
             this.setVgap(2);
         }
+        this.MINES = scenario.get(1);
+        this.timeLeft = scenario.get(2);
+
         blocks = new Block[gridLength][gridLength];
         this.MINEPOS = new boolean[gridLength][gridLength];
-
-        this.MINES = scenario.get(1);
         this.generateGrid();
+
         this.parentWindow = x;
     }
 
@@ -172,6 +175,23 @@ public class Grid extends GridPane{
             }
 
         }
+
+    }
+
+    public static void deactivateBlocks(){
+        //if(blocks != null){
+            //GridPane parent = (GridPane)blocks[0][0].getParent();
+            //if(parent != null){
+                for(int i = 0; i < blocks.length; i++) {
+                    for(int j = 0; j < blocks.length; j++) {
+                        //if(blocks[i][j] != null){
+                            blocks[i][j].setOnMouseClicked(null);
+                        //}
+                    }
+                }
+            //}
+
+        //}
 
     }
 }

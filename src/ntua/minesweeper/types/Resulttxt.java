@@ -23,6 +23,8 @@ public class Resulttxt extends Label{
     public static void handleGameover(Pane p) {
         currentLabel = new Resulttxt("You Lost!", Color.RED, p.getWidth(), p.getHeight());
         p.getChildren().add(currentLabel);
+        Grid.deactivateBlocks();
+        Time.stoptimer();
     }
 
     public static void deleteLabel(){
