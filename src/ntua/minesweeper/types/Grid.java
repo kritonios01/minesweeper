@@ -4,16 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 
@@ -26,7 +21,9 @@ public class Grid extends GridPane{
     private final int MINES;
     private final int gridLength;
 
-    private int timeLeft;
+    //private int timeLeft;
+    private final int supermine;
+
     private final AnchorPane parentWindow;
 
     public Grid(AnchorPane x, List<Integer> scenario) {
@@ -44,7 +41,8 @@ public class Grid extends GridPane{
             this.setVgap(2);
         }
         this.MINES = scenario.get(1);
-        this.timeLeft = scenario.get(2);
+        //this.timeLeft = scenario.get(2);
+        this.supermine = scenario.get(3);
 
         blocks = new Block[gridLength][gridLength];
         this.MINEPOS = new boolean[gridLength][gridLength];
@@ -86,6 +84,9 @@ public class Grid extends GridPane{
                 i--;
             }
             else{
+                //if(i == 0 && supermine == 1){
+
+                //}
                 MINEPOS[row][column] = true;
             }
         }
@@ -98,7 +99,6 @@ public class Grid extends GridPane{
                 block.setGraphic(new ImageView(mineImage));
 
                 Resulttxt.handleGameover(parentWindow);
-
             }
             else{
                 int adjacentMines = countAdjacentMines(row, column);
