@@ -21,6 +21,7 @@ public class Resulttxt extends Label{
     }
 
     public static void handleGameover(Pane p) {
+        Time.stoptimer();
         currentLabel = new Resulttxt("You Lost!", Color.RED, p.getWidth(), p.getHeight());
         p.getChildren().add(currentLabel);
         Grid.deactivateBlocks();
@@ -30,7 +31,9 @@ public class Resulttxt extends Label{
     public static void deleteLabel(){
         if(currentLabel != null) {
             Pane parent = (Pane)currentLabel.getParent();
-            parent.getChildren().remove(currentLabel);
+            if(parent != null){
+                parent.getChildren().remove(currentLabel);
+            }
         }
     }
 }

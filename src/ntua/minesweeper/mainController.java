@@ -54,7 +54,7 @@ public class mainController{
             minesGrid.setLayoutY(110);
             myPane.getChildren().add(minesGrid);
         }
-        catch(NullPointerException e){
+        catch(InstantiationError e){
             System.out.println("You must load a scenario first");
         }
 
