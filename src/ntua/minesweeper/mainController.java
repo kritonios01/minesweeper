@@ -19,6 +19,8 @@ import ntua.minesweeper.types.Time;
 public class mainController{
     @FXML AnchorPane myPane;
     @FXML Label timeLeftLabel;
+    @FXML Label totalMinesLabel;
+    @FXML Label flagsLabel;
 
     public void createScenario() throws Exception{
         Stage createScenarioStage = new Stage();
@@ -45,14 +47,23 @@ public class mainController{
     public void start(ActionEvent event) throws Exception {
         Grid.deleteBlocks();
         Resulttxt.deleteLabel();
+        try{
+            Time.stoptimer();
+        }
+        catch(NullPointerException e){
+
+        }
+
         //na dw giati xreiazetai ayto to try-catch block
         try{
             Scenario id = Scenario.getScenario(Scenario.filename);
             Time timer = new Time(id.getScenarioList().get(2), myPane, timeLeftLabel);
-            Grid minesGrid = new Grid(myPane, id.getScenarioList());
+            Grid minesGrid = new Grid(myPane, id.getScenarioList(), flagsLabel, timeLeftLabel);
             minesGrid.setLayoutX(0);
             minesGrid.setLayoutY(110);
             myPane.getChildren().add(minesGrid);
+            totalMinesLabel.setText(Integer.toString(minesGrid.getTotalMines()));
+
         }
         catch(InstantiationError e){
             System.out.println("You must load a scenario first");
@@ -75,5 +86,20 @@ public class mainController{
         exitStage.setResizable(false);
         exitStage.setScene(exitScene);
 		exitStage.show();
+    }
+
+    public void rounds() throws Exception {
+        Stage roundsStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("roundsScene.fxml"));
+        Scene roundsScene = new Scene(root);
+
+        roundsStage.setTitle("Rounds");
+        roundsStage.setResizable(false);
+        roundsStage.setScene(roundsScene);
+		roundsStage.show();
+    }
+
+    public void solution() throws Exception {
+
     }
 }

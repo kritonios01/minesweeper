@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 public class Time {
     private int counter;
     private static Timeline currentTimeline;
+    //private static int playtime;
 
     public Time(int time, Pane parent, Label label) {
         counter = 0;

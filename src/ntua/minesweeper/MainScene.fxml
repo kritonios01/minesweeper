@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
+<AnchorPane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
    <children>
-      <MenuBar prefHeight="20.0" prefWidth="600.0">
+      <MenuBar prefHeight="28.0" prefWidth="700.0">
         <menus>
           <Menu mnemonicParsing="false" text="Application">
             <items>
@@ -25,13 +25,13 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Details">
             <items>
-              <MenuItem mnemonicParsing="false" text="Rounds" />
-                  <MenuItem mnemonicParsing="false" text="Solution" />
+              <MenuItem fx:id="roundsButton" mnemonicParsing="false" onAction="#rounds" text="Rounds" />
+                  <MenuItem fx:id="solutionButton" mnemonicParsing="false" onAction="#solution" text="Solution" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <Label fx:id="totalminesLabel" layoutX="79.0" layoutY="44.0" prefHeight="33.0" prefWidth="44.0">
+      <Label fx:id="totalMinesLabel" layoutX="77.0" layoutY="51.0" prefHeight="33.0" prefWidth="44.0">
          <font>
             <Font name="Verdana" size="24.0" />
          </font>
@@ -41,22 +41,22 @@
             <Image url="@../../media/bomb.png" />
          </image>
       </ImageView>
-      <Label layoutX="170.0" layoutY="45.0" text="Time Left:">
+      <Label layoutX="256.0" layoutY="51.0" text="Time Left:">
          <font>
             <Font name="Verdana" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="timeLeftLabel" layoutX="302.0" layoutY="45.0" prefHeight="30.0" prefWidth="50.0">
+      <Label fx:id="timeLeftLabel" layoutX="388.0" layoutY="51.0" prefHeight="30.0" prefWidth="50.0">
          <font>
             <Font name="Verdana" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="flagsLabel1" layoutX="535.0" layoutY="46.0" prefHeight="33.0" prefWidth="44.0">
+      <Label fx:id="flagsLabel" layoutX="650.0" layoutY="48.0" prefHeight="33.0" prefWidth="44.0">
          <font>
             <Font name="Verdana" size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="flagImageView" fitHeight="50.0" fitWidth="50.0" layoutX="472.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="flagImageView" fitHeight="50.0" fitWidth="50.0" layoutX="583.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../media/flag2.png" />
          </image>

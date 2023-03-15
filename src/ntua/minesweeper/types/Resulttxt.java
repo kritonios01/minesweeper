@@ -12,17 +12,28 @@ public class Resulttxt extends Label{
 
     public Resulttxt(String s, Color c, double winWidth, double winHeight){
         super(s);
+        this.setFont(Font.font("Verdana", 70));
+        this.setTextFill(c);
         Platform.runLater(() -> { //this allows the label object to be fully rendered before its width is measured so we can get the correct result
             this.setLayoutX(winWidth/2 - this.getWidth()/2);
             this.setLayoutY(winHeight/2);
         });
-        this.setFont(Font.font("Verdana", 70));
-        this.setTextFill(c);
+        //System.out.println( this.getWidth());
+        //this.setFont(Font.font("Verdana", 70));
+        //this.setTextFill(c);
     }
 
     public static void handleGameover(Pane p) {
-        Time.stoptimer();
+        //Time.stoptimer();
         currentLabel = new Resulttxt("You Lost!", Color.RED, p.getWidth(), p.getHeight());
+        p.getChildren().add(currentLabel);
+        Grid.deactivateBlocks();
+        Time.stoptimer();
+    }
+
+    public static void handleWin(Pane p) {
+        //Time.stoptimer();
+        currentLabel = new Resulttxt("You won!!", Color.GREEN, p.getWidth(), p.getHeight());
         p.getChildren().add(currentLabel);
         Grid.deactivateBlocks();
         Time.stoptimer();

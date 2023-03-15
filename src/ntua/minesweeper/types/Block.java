@@ -9,10 +9,10 @@ class Block extends Button{
     public Block(int gridLength){
         super();
         if(gridLength == 9){
-            this.setPrefSize(60, 60);
+            this.setPrefSize(70, 70);
         }
         else{
-            this.setPrefSize(50, 50);
+            this.setPrefSize(40, 40);
         }
         this.flagged = false;
 
