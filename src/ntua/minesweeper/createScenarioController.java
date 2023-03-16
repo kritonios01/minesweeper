@@ -12,11 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-import java.io.File;
 import java.io.FileWriter;
 
 public class createScenarioController implements Initializable{
-
     @FXML private TextField scenarioTextField;
     @FXML private ChoiceBox<String> difficultyChoiceBox;
     @FXML private TextField minesTextField;
@@ -43,7 +41,6 @@ public class createScenarioController implements Initializable{
                 throw new NullPointerException();
             }
 
-            //edw na ginei ena optimization giati xrisimopoiountai ta idia edw kai panw
             String filename = new String(scenarioTextField.getText());
             String mines = new String(minesTextField.getText());
             String time = new String(timeTextField.getText());

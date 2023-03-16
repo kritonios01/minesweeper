@@ -10,11 +10,8 @@ import ntua.minesweeper.exceptions.InvalidDescriptionException;
 import ntua.minesweeper.exceptions.InvalidValueException;
 import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 
-
-//!!!! na xrisimopoihtei ayth h klash kai gia th dhmiourg;ia scenariou
 public class Scenario {
     public static String filename;
-
     private int difficulty;
     private int mines;
     private int time;
@@ -27,33 +24,23 @@ public class Scenario {
         this.supermine = supermine;
     }
 
-
     public static Scenario getScenario(String input) throws IOException{
         try{
             BufferedReader inputFile = new BufferedReader(new FileReader("src/medialab/" + input + ".txt"));
-
             List<Integer> values = checkAndAssign(checklines(inputFile)); //we check values if there are 4 lines exactly
-
             inputFile.close();
-
             return new Scenario(values.get(0).intValue(), values.get(1).intValue(), values.get(2).intValue(), values.get(3).intValue());
         }
         catch(FileNotFoundException e){
-            //System.out.println("File not Found");//actually handle the exceptions
             throw new ScenarioInstantiationException("File Not Found!!!");
         }
         catch(InvalidDescriptionException e){
-            //System.out.println("File doesn't have 4 lines");
             throw new ScenarioInstantiationException("File does not have 4 lines!!!");
         }
         catch(InvalidValueException e){
-            //System.out.println("Invalid Value Description");
             throw new ScenarioInstantiationException("Description has invalid values!!!");
         }
-
-        //return null;
     }
-
 
     //checks if there are four lines exactly and returns a list of strings, each of which is a line
     public static List<String> checklines (BufferedReader x) throws InvalidDescriptionException, IOException{

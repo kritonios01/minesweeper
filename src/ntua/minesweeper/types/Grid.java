@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,10 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-
-
-//prepei na ginei handle winning
-public class Grid extends GridPane{
+public class Grid extends GridPane {
     private static Block[][] blocks;
     private final boolean[][] MINEPOS;
     private List<Integer> SUPERMINEPOS;
@@ -33,21 +29,19 @@ public class Grid extends GridPane{
     private int supermineCount;
     private int flagCount;
     private Label flagLabel;
-    private Label timeLeftLabel;
     private int openBlocks;
 
     private final AnchorPane parentWindow;
     private static Grid currentGrid;
 
-    public Grid(AnchorPane x, List<Integer> scenario, Label flags, Label timeLeft) {
+    public Grid(AnchorPane x, List<Integer> scenario, Label flags) {
         super();
-        if(scenario.get(0) == 1){
+        if (scenario.get(0) == 1) {
             this.gridLength = 9;
             this.setPadding(new Insets(23));
             this.setHgap(3);
             this.setVgap(3);
-        }
-        else{
+        } else {
             this.gridLength = 16;
             this.setPadding(new Insets(14));
             this.setHgap(2);
@@ -64,7 +58,6 @@ public class Grid extends GridPane{
         this.supermineCount = 0;
         this.flagCount = 0;
         this.flagLabel = flags;
-        this.timeLeftLabel = timeLeft;
         this.openBlocks = 0;
         this.parentWindow = x;
         currentGrid = this;
@@ -72,40 +65,28 @@ public class Grid extends GridPane{
     }
 
     private void generateGrid() {
-        //Resulttxt.handleGameover(parentWindow);
-        //Resulttxt.handleWin(parentWindow);
-
         generateMinePositions();
         for (int i = 0; i < gridLength; i++) {
-			for (int j = 0; j < gridLength; j++) {
-				Block block = new Block(gridLength);
-				final int row = i;
-				final int column = j;
-				block.setOnMouseClicked(event -> {
-                    if(event.getButton() == MouseButton.PRIMARY){
+            for (int j = 0; j < gridLength; j++) {
+                Block block = new Block(gridLength);
+                final int row = i;
+                final int column = j;
+                block.setOnMouseClicked(event -> {
+                    if (event.getButton() == MouseButton.PRIMARY) {
                         handleLeftClick(block, row, column);
-                    }
-                    else if(event.getButton() == MouseButton.SECONDARY){
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
                         handleRightClick(block, row, column);
                     }
                 });
-				blocks[i][j] = block;
-				this.add(block, i, j);
-			}
-		}
-        if(supermine == 1){
-            blocks[SUPERMINEPOS.get(0)][SUPERMINEPOS.get(1)].setSupermine();
-            System.out.println(SUPERMINEPOS.get(0).intValue() + " " + SUPERMINEPOS.get(1).intValue());
+                blocks[i][j] = block;
+                this.add(block, i, j);
+            }
         }
-
     }
 
-//HANDLE WINNING
-
-    //auto prepei na ginei me mia parametro sti klasi block kai oxi me array
     private void generateMinePositions() {
         Random random = new Random();
-        try{
+        try {
             FileWriter minesdata = new FileWriter("src/medialab/mines.txt");
 
             for (int i = 0; i < MINES; i++) {
@@ -113,65 +94,55 @@ public class Grid extends GridPane{
                 int column = random.nextInt(gridLength);
                 if (MINEPOS[row][column]) {
                     i--;
-                }
-                else{
+                } else {
                     MINEPOS[row][column] = true;
                     minesdata.write(Integer.toString(row));
                     minesdata.write(",");
                     minesdata.write(Integer.toString(column));
                     minesdata.write(",");
 
-                    if(i == 0 && supermine == 1){
+                    if (i == 0 && supermine == 1) {
                         SUPERMINEPOS.add(row);
                         SUPERMINEPOS.add(column);
                         minesdata.write("1");
                         minesdata.write("\n");
-                    }
-                    else{
+                    } else {
                         minesdata.write("0");
                         minesdata.write("\n");
                     }
                 }
             }
             minesdata.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println("IOException");
         }
-
-
     }
 
     private void handleLeftClick(Block block, int row, int column) {
-        if(!block.getflag()) {
+        if (!block.getflag()) {
             if (MINEPOS[row][column] == true) {
-                if(gridLength == 9){
+                if (gridLength == 9) {
                     Image mineImage = new Image("media/mine.png", 40, 0, true, true);
                     block.setGraphic(new ImageView(mineImage));
-                }
-                else{
+                } else {
                     Image mineImage = new Image("media/mine.png", 23, 0, true, true);
                     block.setGraphic(new ImageView(mineImage));
                 }
                 Rounds.setStats(MINES, supermineCount, TIME, 0);
                 Resulttxt.handleGameover(parentWindow);
-                //Rounds.printstats();
-            }
-            else{
+            } else {
                 supermineCount++;
                 openBlocks++;
                 int adjacentMines = countAdjacentMines(row, column);
                 if (adjacentMines == 0) {
                     block.setDisable(true);
                     adjacentReveal(row, column);
-                }
-                else{
+                } else {
                     block.setFont(Font.font("Verdana", 20));
                     block.setText(Integer.toString(adjacentMines));
                     block.setDisable(true);
                 }
-                //System.out.println(gridLength*gridLength-MINES +" "+openBlocks);
-                if(gridLength*gridLength - MINES == openBlocks){
+                if (gridLength * gridLength - MINES == openBlocks) {
                     Rounds.setStats(MINES, supermineCount, TIME, 1);
                     Resulttxt.handleWin(parentWindow);
                 }
@@ -180,29 +151,28 @@ public class Grid extends GridPane{
     }
 
     private void handleRightClick(Block block, int row, int column) {
-            if(!block.getflag()) {
-                if(flagCount < MINES){
-                    if(gridLength == 9){
-                        Image flagImage = new Image("media/flag.png", 40, 0, true, true);
-                        block.setGraphic(new ImageView(flagImage));
-                    }
-                    else{
-                        Image flagImage = new Image("media/flag.png", 22, 0, true, true);
-                        block.setGraphic(new ImageView(flagImage));
-                    }
-                    block.setflag();
-                    flagCount++;
-                    if(supermine == 1 && supermineCount <= 4 && SUPERMINEPOS.get(0) == row && SUPERMINEPOS.get(1) == column) {
-                        handleSupermine(row, column);
-                    }
+        if (!block.getflag()) {
+            if (flagCount < MINES) {
+                if (gridLength == 9) {
+                    Image flagImage = new Image("media/flag.png", 40, 0, true, true);
+                    block.setGraphic(new ImageView(flagImage));
+                } else {
+                    Image flagImage = new Image("media/flag.png", 22, 0, true, true);
+                    block.setGraphic(new ImageView(flagImage));
+                }
+                block.setflag();
+                flagCount++;
+                if (supermine == 1 && supermineCount <= 4 && SUPERMINEPOS.get(0) == row
+                        && SUPERMINEPOS.get(1) == column) {
+                    handleSupermine(row, column);
                 }
             }
-            else {
-                block.setGraphic(null);
-                block.unsetflag();
-                flagCount--;
-            }
-            flagLabel.setText(Integer.toString(flagCount));
+        } else {
+            block.setGraphic(null);
+            block.unsetflag();
+            flagCount--;
+        }
+        flagLabel.setText(Integer.toString(flagCount));
     }
 
     private int countAdjacentMines(int row, int column) {
@@ -224,14 +194,14 @@ public class Grid extends GridPane{
             for (int j = -1; j <= 1; j++) {
                 int x = row + i;
                 int y = column + j;
-                if (x >= 0 && x < gridLength && y >= 0 && y < gridLength && !blocks[x][y].isDisabled() && !blocks[x][y].getflag() && !MINEPOS[x][y]) {
+                if (x >= 0 && x < gridLength && y >= 0 && y < gridLength && !blocks[x][y].isDisabled()
+                 && !blocks[x][y].getflag() && !MINEPOS[x][y]) {
                     blocks[x][y].setDisable(true);
                     openBlocks++;
                     int adjacentMines = countAdjacentMines(x, y);
                     if (adjacentMines == 0) {
                         adjacentReveal(x, y);
-                    }
-                    else{
+                    } else {
                         blocks[x][y].setFont(Font.font("Verdana", 20));
                         blocks[x][y].setText(Integer.toString(adjacentMines));
                     }
@@ -241,99 +211,83 @@ public class Grid extends GridPane{
     }
 
     public static void deleteBlocks() {
-        if(blocks != null){
-            GridPane parent = (GridPane)blocks[0][0].getParent();
-            if(parent != null){
-                for(int i = 0; i < blocks.length; i++) {
-                    for(int j = 0; j < blocks.length; j++) {
-                        //if(blocks[i][j] != null){
-                            parent.getChildren().remove(blocks[i][j]);
-                        //}
+        if (blocks != null) {
+            GridPane parent = (GridPane) blocks[0][0].getParent();
+            if (parent != null) {
+                for (int i = 0; i < blocks.length; i++) {
+                    for (int j = 0; j < blocks.length; j++) {
+                        parent.getChildren().remove(blocks[i][j]);
                     }
                 }
             }
-
         }
-
     }
 
     public static void deactivateBlocks() {
-        //if(blocks != null){
-            //GridPane parent = (GridPane)blocks[0][0].getParent();
-            //if(parent != null){
-                for(int i = 0; i < blocks.length; i++) {
-                    for(int j = 0; j < blocks.length; j++) {
-                        //if(blocks[i][j] != null){
-                            blocks[i][j].setOnMouseClicked(null);
-                        //}
-                    }
-                }
-            //}
-
-        //}
-
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks.length; j++) {
+                blocks[i][j].setOnMouseClicked(null);
+            }
+        }
     }
 
     private void handleSupermine(int row, int column) {
         for (int i = 0; i < 16; i++) {
-            //if(i != row && i != column){
-                Block block = blocks[i][column];
-                if(block.getflag()){
-                    block.unsetflag();
-                }
-                if(MINEPOS[i][column]){
-                    Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
-                    block.setGraphic(new ImageView(supermineImage));
-                    block.setOnMouseClicked(null);
-                }
-                else{
-                    int adjacentMines = countAdjacentMines(i, column);
-                    if (adjacentMines == 0) {
-                        block.setDisable(true);
-                        openBlocks++;
-                    }
-                    else{
-                        openBlocks++;
-                        block.setFont(Font.font("Verdana", 20));
-                        block.setText(Integer.toString(adjacentMines));
-                        block.setDisable(true);
-                    }
-                }
-                block = blocks[row][i];
-                if(block.getflag()){
-                    block.unsetflag();
-                }
-                if(MINEPOS[row][i]){
-                    Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
-                    block.setGraphic(new ImageView(supermineImage));
-                    block.setOnMouseClicked(null);
+            Block block = blocks[i][column];
+            if(block.getflag()){
+                block.unsetflag();
+            }
+            if(MINEPOS[i][column]){
+                Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
+                block.setGraphic(new ImageView(supermineImage));
+                block.setOnMouseClicked(null);
+            }
+            else{
+                int adjacentMines = countAdjacentMines(i, column);
+                if (adjacentMines == 0) {
+                    block.setDisable(true);
+                    openBlocks++;
                 }
                 else{
-                    int adjacentMines = countAdjacentMines(row, i);
-                    if (adjacentMines == 0) {
-                        block.setDisable(true);
-                        openBlocks++;
-                    }
-                    else{
-                        openBlocks++;
-                        block.setFont(Font.font("Verdana", 20));
-                        block.setText(Integer.toString(adjacentMines));
-                        block.setDisable(true);
-                    }
+                    openBlocks++;
+                    block.setFont(Font.font("Verdana", 20));
+                    block.setText(Integer.toString(adjacentMines));
+                    block.setDisable(true);
                 }
-            //}
+            }
+            block = blocks[row][i];
+            if(block.getflag()){
+                block.unsetflag();
+            }
+            if(MINEPOS[row][i]){
+                Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
+                block.setGraphic(new ImageView(supermineImage));
+                block.setOnMouseClicked(null);
+            }
+            else{
+                int adjacentMines = countAdjacentMines(row, i);
+                if (adjacentMines == 0) {
+                    block.setDisable(true);
+                    openBlocks++;
+                }
+                else{
+                    openBlocks++;
+                    block.setFont(Font.font("Verdana", 20));
+                    block.setText(Integer.toString(adjacentMines));
+                    block.setDisable(true);
+                }
+            }
         }
     }
 
-    public int getTotalMines(){
+    public int getTotalMines() {
         return MINES;
     }
 
     public static void solution(AnchorPane parent) {
-        if(blocks != null){
-            //GridPane grid = (GridPane)blocks[0][0].getParent();
-            if(parent != null){
-                try{
+        if (blocks != null) {
+            if (parent != null) {
+                try {
                     BufferedReader file = new BufferedReader(new FileReader("src/medialab/mines.txt"));
                     String line;
                     while ((line = file.readLine()) != null) {
@@ -341,11 +295,10 @@ public class Grid extends GridPane{
                         int x = Integer.parseInt(mine[0]);
                         int y = Integer.parseInt(mine[1]);
 
-                        if(currentGrid.gridLength == 9){
+                        if (currentGrid.gridLength == 9) {
                             Image mineImage = new Image("media/mine.png", 40, 0, true, true);
                             blocks[x][y].setGraphic(new ImageView(mineImage));
-                        }
-                        else{
+                        } else {
                             Image mineImage = new Image("media/mine.png", 23, 0, true, true);
                             blocks[x][y].setGraphic(new ImageView(mineImage));
                         }
@@ -353,13 +306,11 @@ public class Grid extends GridPane{
                     Rounds.setStats(currentGrid.MINES, currentGrid.supermineCount, currentGrid.TIME, 0);
                     Resulttxt.handleGameover(parent);
                     file.close();
-                }
-                catch(IOException e){
+                } catch (IOException e) {
                     System.out.println("You need to start a game first");
                 }
             }
         }
     }
-
 
 }

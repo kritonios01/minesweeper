@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 
 class Block extends Button{
     private boolean flagged;
-    private boolean supermine;
 
     public Block(int gridLength){
         super();
@@ -15,8 +14,6 @@ class Block extends Button{
             this.setPrefSize(40, 40);
         }
         this.flagged = false;
-
-        this.supermine = false;
     }
 
     public boolean getflag(){
@@ -29,9 +26,5 @@ class Block extends Button{
 
     public void unsetflag(){
         this.flagged = false;
-    }
-
-    public void setSupermine() {
-        this.supermine = true;
     }
 }

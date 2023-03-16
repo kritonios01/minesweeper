@@ -8,11 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.Node;
 import javafx.stage.Stage;
 import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 import ntua.minesweeper.types.Grid;
@@ -57,12 +54,10 @@ public class mainController{
         catch(NullPointerException e){
 
         }
-
-        //na dw giati xreiazetai ayto to try-catch block
         try{
             Scenario id = Scenario.getScenario(Scenario.filename);
             Time timer = new Time(id.getScenarioList().get(2), myPane, timeLeftLabel);
-            Grid minesGrid = new Grid(myPane, id.getScenarioList(), flagsLabel, timeLeftLabel);
+            Grid minesGrid = new Grid(myPane, id.getScenarioList(), flagsLabel);
             minesGrid.setLayoutX(0);
             minesGrid.setLayoutY(110);
             myPane.getChildren().add(minesGrid);
@@ -82,9 +77,6 @@ public class mainController{
             errorStage.setHeight(200);
 		    errorStage.show();
         }
-        //catch(InstantiationError e){
-           // System.out.println("You must load a scenario first");
-        //}
 
 
     }

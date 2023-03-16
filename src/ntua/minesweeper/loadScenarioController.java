@@ -1,9 +1,5 @@
 package ntua.minesweeper;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,14 +11,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import ntua.minesweeper.exceptions.InvalidDescriptionException;
-import ntua.minesweeper.exceptions.InvalidValueException;
 import ntua.minesweeper.exceptions.ScenarioInstantiationException;
-import ntua.minesweeper.types.Scenario;
-
-
 import ntua.minesweeper.types.Scenario;
 
 public class loadScenarioController {
@@ -36,7 +25,6 @@ public class loadScenarioController {
         Scenario.filename = filename;
         try{
             Scenario id = Scenario.getScenario(filename);
-            //System.out.println("All good!");
             ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         }
         catch(ScenarioInstantiationException e){
@@ -54,6 +42,5 @@ public class loadScenarioController {
         catch(Exception e){
             System.out.println("Error");
         }
-        //((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }

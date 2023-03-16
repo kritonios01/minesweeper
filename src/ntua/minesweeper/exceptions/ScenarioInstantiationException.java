@@ -1,7 +1,7 @@
 package ntua.minesweeper.exceptions;
 
 public class ScenarioInstantiationException extends RuntimeException{
-    private String cause;
+    private final String cause;
 
     public ScenarioInstantiationException(String cause) {
         super();
