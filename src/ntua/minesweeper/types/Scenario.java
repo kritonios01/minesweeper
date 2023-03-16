@@ -8,6 +8,7 @@ import java.util.List;
 
 import ntua.minesweeper.exceptions.InvalidDescriptionException;
 import ntua.minesweeper.exceptions.InvalidValueException;
+import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 
 
 //!!!! na xrisimopoihtei ayth h klash kai gia th dhmiourg;ia scenariou
@@ -38,16 +39,19 @@ public class Scenario {
             return new Scenario(values.get(0).intValue(), values.get(1).intValue(), values.get(2).intValue(), values.get(3).intValue());
         }
         catch(FileNotFoundException e){
-            System.out.println("File not Found");//actually handle the exceptions
+            //System.out.println("File not Found");//actually handle the exceptions
+            throw new ScenarioInstantiationException("File Not Found!!!");
         }
         catch(InvalidDescriptionException e){
-            System.out.println("File doesn't have 4 lines");
+            //System.out.println("File doesn't have 4 lines");
+            throw new ScenarioInstantiationException("File does not have 4 lines!!!");
         }
         catch(InvalidValueException e){
-            System.out.println("Invalid Value Description");
+            //System.out.println("Invalid Value Description");
+            throw new ScenarioInstantiationException("Description has invalid values!!!");
         }
 
-        return null;
+        //return null;
     }
 
 

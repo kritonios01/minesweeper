@@ -3,14 +3,18 @@ package ntua.minesweeper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 import ntua.minesweeper.types.Grid;
 import ntua.minesweeper.types.Resulttxt;
 import ntua.minesweeper.types.Scenario;
@@ -63,11 +67,24 @@ public class mainController{
             minesGrid.setLayoutY(110);
             myPane.getChildren().add(minesGrid);
             totalMinesLabel.setText(Integer.toString(minesGrid.getTotalMines()));
-
         }
-        catch(InstantiationError e){
-            System.out.println("You must load a scenario first");
+        catch(ScenarioInstantiationException e){
+            Stage errorStage = new Stage();
+            Label error = new Label("You must load a scenario first!!!");
+            error.setFont(Font.font("Verdana", 20));
+            error.setTextFill(Color.RED);
+            error.setAlignment(Pos.CENTER);
+            Scene errorScene = new Scene(error);
+            errorStage.setTitle("Error...");
+            errorStage.setResizable(false);
+            errorStage.setScene(errorScene);
+            errorStage.setWidth(400);
+            errorStage.setHeight(200);
+		    errorStage.show();
         }
+        //catch(InstantiationError e){
+           // System.out.println("You must load a scenario first");
+        //}
 
 
     }
@@ -100,6 +117,6 @@ public class mainController{
     }
 
     public void solution() throws Exception {
-
+        Grid.solution(myPane);
     }
 }

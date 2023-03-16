@@ -37,6 +37,7 @@ public class Grid extends GridPane{
     private int openBlocks;
 
     private final AnchorPane parentWindow;
+    private static Grid currentGrid;
 
     public Grid(AnchorPane x, List<Integer> scenario, Label flags, Label timeLeft) {
         super();
@@ -66,6 +67,7 @@ public class Grid extends GridPane{
         this.timeLeftLabel = timeLeft;
         this.openBlocks = 0;
         this.parentWindow = x;
+        currentGrid = this;
         this.generateGrid();
     }
 
@@ -327,29 +329,33 @@ public class Grid extends GridPane{
         return MINES;
     }
 
-    public static void solution() {
+    public static void solution(AnchorPane parent) {
         if(blocks != null){
-            GridPane parent = (GridPane)blocks[0][0].getParent();
+            //GridPane grid = (GridPane)blocks[0][0].getParent();
             if(parent != null){
-                for(int i = 0; i < blocks.length; i++) {
-                    for(int j = 0; j < blocks.length; j++) {
-                        //if(blocks[i][j] != null){
-                            //parent.getChildren().remove(blocks[i][j]);
-                        //}
-                        try {
-                            BufferedReader reader = new BufferedReader(new FileReader("filename.txt"));
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                String[] parts = line.split(",");
-                                int num1 = Integer.parseInt(parts[0].trim());
-                                double num2 = Double.parseDouble(parts[1].trim());
-                                // Do something with num1 and num2
-                            }
-                            reader.close();
-                        } catch (IOException e) {
-                            System.err.println("Error reading file: " + e.getMessage());
+                try{
+                    BufferedReader file = new BufferedReader(new FileReader("src/medialab/mines.txt"));
+                    String line;
+                    while ((line = file.readLine()) != null) {
+                        String[] mine = line.split(",");
+                        int x = Integer.parseInt(mine[0]);
+                        int y = Integer.parseInt(mine[1]);
+
+                        if(currentGrid.gridLength == 9){
+                            Image mineImage = new Image("media/mine.png", 40, 0, true, true);
+                            blocks[x][y].setGraphic(new ImageView(mineImage));
+                        }
+                        else{
+                            Image mineImage = new Image("media/mine.png", 23, 0, true, true);
+                            blocks[x][y].setGraphic(new ImageView(mineImage));
                         }
                     }
+                    Rounds.setStats(currentGrid.MINES, currentGrid.supermineCount, currentGrid.TIME, 0);
+                    Resulttxt.handleGameover(parent);
+                    file.close();
+                }
+                catch(IOException e){
+                    System.out.println("You need to start a game first");
                 }
             }
         }
