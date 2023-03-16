@@ -34,37 +34,32 @@ public class createScenarioController implements Initializable{
     }
 
     public void createScenario(ActionEvent event) throws Exception{
-        if (scenarioTextField.getText().isEmpty()
-         || minesTextField.getText().isEmpty()
-         || timeTextField.getText().isEmpty()
-         || difficultyChoiceBox.getValue() == null
-         || supermineChoiceBox.getValue() == null)
-         {
-            System.out.println("helid");//to be implemented
+        try{
+            if (scenarioTextField.getText().isEmpty()
+            || minesTextField.getText().isEmpty()
+            || timeTextField.getText().isEmpty()
+            || difficultyChoiceBox.getValue() == null
+            || supermineChoiceBox.getValue() == null) {
+                throw new NullPointerException();
+            }
+
+            //edw na ginei ena optimization giati xrisimopoiountai ta idia edw kai panw
+            String filename = new String(scenarioTextField.getText());
+            String mines = new String(minesTextField.getText());
+            String time = new String(timeTextField.getText());
+            String difficulty = new String(difficultyChoiceBox.getValue());
+            String supermine = new String(supermineChoiceBox.getValue());
+
+            FileWriter output = new FileWriter("src/medialab/" + filename + ".txt");
+            output.write(difficulty + "\n" + mines + "\n" + time + "\n" + supermine);
+            output.close();
+
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
+
         }
+        catch(NullPointerException e){
 
-        //edw na ginei ena optimization giati xrisimopoiountai ta idia edw kai panw
-        String filename = new String(scenarioTextField.getText());
-        String mines = new String(minesTextField.getText());
-        String time = new String(timeTextField.getText());
-        String difficulty = new String(difficultyChoiceBox.getValue());
-        String supermine = new String(supermineChoiceBox.getValue());
-
-        File scenariofile = new File("src/medialab/" + filename + ".txt");
-
-        if (scenariofile.createNewFile()) {
-            System.out.println("The new file is created.");
         }
-        else {
-            System.out.println("The file already exists.");//to be implemented
-        }
-
-        FileWriter output = new FileWriter("src/medialab/" + filename + ".txt");
-        output.write(difficulty + "\n" + mines + "\n" + time + "\n" + supermine);
-        output.close();
-
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();//close window
-
     }
 
 }
