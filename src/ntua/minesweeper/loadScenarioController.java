@@ -14,6 +14,8 @@ import javafx.scene.Node;
 import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 import ntua.minesweeper.types.Scenario;
 
+//A controller for the Load Scenario Controller
+//We check for each kind of problem there can be with the file and appropriate error message is thrown to the user
 public class loadScenarioController {
     @FXML private TextField scenarioTextField;
     @FXML private Button loadScenarioBox;

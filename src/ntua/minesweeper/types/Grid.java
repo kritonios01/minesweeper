@@ -17,31 +17,33 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
+//A grid is instantiated with all parameters from the scenario last loaded
 public class Grid extends GridPane {
-    private static Block[][] blocks;
-    private final boolean[][] MINEPOS;
-    private List<Integer> SUPERMINEPOS;
-    private final int MINES;
-    private final int TIME;
-    private final int gridLength;
+    private static Block[][] blocks; //blocks array stores all the blocks instantiated
+    private final boolean[][] MINEPOS; //minepos array stores all the positions of mines in the grid
+    private List<Integer> SUPERMINEPOS; //superminepos stores the row an column of the supermine
+    private final int MINES; //total ammount of mines
+    private final int TIME; //total time
+    private final int gridLength; //length (and height as well) in terms of blocks for the grid
 
-    private final int supermine;
-    private int supermineCount;
-    private int flagCount;
-    private Label flagLabel;
-    private int openBlocks;
+    private final int supermine; //0 for no supermine, 1 for supermine
+    private int supermineCount; //counts successful left clicks
+    private int flagCount; //counts total flags in the grid
+    private Label flagLabel; //reference to the flags label in the main pane
+    private int openBlocks; //amount of blocks open
 
-    private final AnchorPane parentWindow;
-    private static Grid currentGrid;
+    private final AnchorPane parentWindow; //the main pane
+    private static Grid currentGrid; //everytime a new grid is instantiated, currentgrid references it
 
     public Grid(AnchorPane x, List<Integer> scenario, Label flags) {
         super();
-        if (scenario.get(0) == 1) {
+        if(scenario.get(0) == 1){ //instantiates the grid according the difficulty
             this.gridLength = 9;
             this.setPadding(new Insets(23));
             this.setHgap(3);
             this.setVgap(3);
-        } else {
+        }
+        else{
             this.gridLength = 16;
             this.setPadding(new Insets(14));
             this.setHgap(2);
@@ -64,7 +66,7 @@ public class Grid extends GridPane {
         this.generateGrid();
     }
 
-    private void generateGrid() {
+    private void generateGrid() { //with this function we add mines to the appropriate positions and add mouseclick events to each button
         generateMinePositions();
         for (int i = 0; i < gridLength; i++) {
             for (int j = 0; j < gridLength; j++) {
@@ -84,7 +86,7 @@ public class Grid extends GridPane {
         }
     }
 
-    private void generateMinePositions() {
+    private void generateMinePositions() {//this function generates mines and a supermine if this option is on
         Random random = new Random();
         try {
             FileWriter minesdata = new FileWriter("src/medialab/mines.txt");
@@ -118,9 +120,9 @@ public class Grid extends GridPane {
         }
     }
 
-    private void handleLeftClick(Block block, int row, int column) {
+    private void handleLeftClick(Block block, int row, int column) { //the left-click scenario
         if (!block.getflag()) {
-            if (MINEPOS[row][column] == true) {
+            if (MINEPOS[row][column] == true) { // if they click on a mine they lose
                 if (gridLength == 9) {
                     Image mineImage = new Image("media/mine.png", 40, 0, true, true);
                     block.setGraphic(new ImageView(mineImage));
@@ -130,14 +132,14 @@ public class Grid extends GridPane {
                 }
                 Rounds.setStats(MINES, supermineCount, TIME, 0);
                 Resulttxt.handleGameover(parentWindow);
-            } else {
+            } else { //if they don't click on a mine adjacent mines are computed
                 supermineCount++;
                 openBlocks++;
                 int adjacentMines = countAdjacentMines(row, column);
-                if (adjacentMines == 0) {
+                if (adjacentMines == 0) { //if there are no mines around we do adjacent reveal
                     block.setDisable(true);
                     adjacentReveal(row, column);
-                } else {
+                } else { // if there are mines around we show their number
                     block.setFont(Font.font("Verdana", 20));
                     block.setText(Integer.toString(adjacentMines));
                     block.setDisable(true);
@@ -150,10 +152,10 @@ public class Grid extends GridPane {
         }
     }
 
-    private void handleRightClick(Block block, int row, int column) {
-        if (!block.getflag()) {
-            if (flagCount < MINES) {
-                if (gridLength == 9) {
+    private void handleRightClick(Block block, int row, int column) { // the right click scenario
+        if (!block.getflag()) { //if there is no flag
+            if (flagCount < MINES) { //and if there are less flags than mines
+                if (gridLength == 9) { //we show a flag according to block size
                     Image flagImage = new Image("media/flag.png", 40, 0, true, true);
                     block.setGraphic(new ImageView(flagImage));
                 } else {
@@ -163,11 +165,11 @@ public class Grid extends GridPane {
                 block.setflag();
                 flagCount++;
                 if (supermine == 1 && supermineCount <= 4 && SUPERMINEPOS.get(0) == row
-                        && SUPERMINEPOS.get(1) == column) {
+                        && SUPERMINEPOS.get(1) == column) { //we handle the case of having a supermine below
                     handleSupermine(row, column);
                 }
             }
-        } else {
+        } else { //if the block is flagged we unflag it
             block.setGraphic(null);
             block.unsetflag();
             flagCount--;
@@ -175,7 +177,7 @@ public class Grid extends GridPane {
         flagLabel.setText(Integer.toString(flagCount));
     }
 
-    private int countAdjacentMines(int row, int column) {
+    private int countAdjacentMines(int row, int column) {//simple algorithm which counts adjacent mines
         int count = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -189,7 +191,7 @@ public class Grid extends GridPane {
         return count;
     }
 
-    private void adjacentReveal(int row, int column) {
+    private void adjacentReveal(int row, int column) {//simple algorithm to handle adjacent reveal
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int x = row + i;
@@ -210,7 +212,7 @@ public class Grid extends GridPane {
         }
     }
 
-    public static void deleteBlocks() {
+    public static void deleteBlocks() { //a method for deleting preexisting blocks when a new game starts
         if (blocks != null) {
             GridPane parent = (GridPane) blocks[0][0].getParent();
             if (parent != null) {
@@ -223,7 +225,7 @@ public class Grid extends GridPane {
         }
     }
 
-    public static void deactivateBlocks() {
+    public static void deactivateBlocks() { //a method for deactivating left and right click functionalities on a block when the user wins or loses
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
                 blocks[i][j].setOnMouseClicked(null);
@@ -231,11 +233,12 @@ public class Grid extends GridPane {
         }
     }
 
-    private void handleSupermine(int row, int column) {
+    private void handleSupermine(int row, int column) { //a method for handling supermines
         for (int i = 0; i < 16; i++) {
-            Block block = blocks[i][column];
+            Block block = blocks[i][column]; //first we check each block in the same column
             if(block.getflag()){
                 block.unsetflag();
+                block.setGraphic(null);
             }
             if(MINEPOS[i][column]){
                 Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
@@ -255,9 +258,10 @@ public class Grid extends GridPane {
                     block.setDisable(true);
                 }
             }
-            block = blocks[row][i];
+            block = blocks[row][i]; //then we check each block in the same row
             if(block.getflag()){
                 block.unsetflag();
+                block.setGraphic(null);
             }
             if(MINEPOS[row][i]){
                 Image supermineImage = new Image("media/supermine.png", 0, 30, true, true);
@@ -284,9 +288,9 @@ public class Grid extends GridPane {
         return MINES;
     }
 
-    public static void solution(AnchorPane parent) {
+    public static void solution(AnchorPane parent) { //a method to handle solution button of the main pane
         if (blocks != null) {
-            if (parent != null) {
+            if (parent != null) { //given that there is a grid and blocks we import mine position from the file and for each position we show the mines
                 try {
                     BufferedReader file = new BufferedReader(new FileReader("src/medialab/mines.txt"));
                     String line;

@@ -6,6 +6,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+//this class handles the message which appears when the user wins or loses
+//there is a simple constructor which creates labels for the main pane and
+//there is a method for handling gameover, for handling winning and for deleting the exisitng label when a new game starts
 public class Resulttxt extends Label{
     public static Resulttxt currentLabel;
 

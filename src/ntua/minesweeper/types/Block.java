@@ -2,6 +2,8 @@ package ntua.minesweeper.types;
 
 import javafx.scene.control.Button;
 
+//A block is instantiated according to the grid's length and of course a block has
+//a flag attribute which tells if it is flagged
 class Block extends Button{
     private boolean flagged;
 

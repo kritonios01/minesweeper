@@ -10,6 +10,8 @@ import ntua.minesweeper.exceptions.InvalidDescriptionException;
 import ntua.minesweeper.exceptions.InvalidValueException;
 import ntua.minesweeper.exceptions.ScenarioInstantiationException;
 
+//This class creates scenarios according to the last scenario file selected and of course we check if values are in boundaries
+//Exceptions have been handled accordingly
 public class Scenario {
     public static String filename;
     private int difficulty;

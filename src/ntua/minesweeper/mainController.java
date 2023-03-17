@@ -17,13 +17,14 @@ import ntua.minesweeper.types.Resulttxt;
 import ntua.minesweeper.types.Scenario;
 import ntua.minesweeper.types.Time;
 
+//The main controller class which handles all the buttons of the menu bar
 public class mainController{
     @FXML AnchorPane myPane;
     @FXML Label timeLeftLabel;
     @FXML Label totalMinesLabel;
     @FXML Label flagsLabel;
 
-    public void createScenario() throws Exception{
+    public void createScenario() throws Exception{ //this method is used to open the CreateScenario window
         Stage createScenarioStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("createScenarioScene.fxml"));
         Scene createScenarioScene = new Scene(root);
@@ -34,7 +35,7 @@ public class mainController{
 		createScenarioStage.show();
     }
 
-    public void loadScenario() throws Exception {
+    public void loadScenario() throws Exception { //this method is used to open the LoadScenario window
         Stage loadScenarioStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("loadScenarioScene.fxml"));
         Scene loadScenarioScene = new Scene(root);
@@ -45,25 +46,25 @@ public class mainController{
 		loadScenarioStage.show();
     }
 
-    public void start(ActionEvent event) throws Exception {
-        Grid.deleteBlocks();
-        Resulttxt.deleteLabel();
+    public void start(ActionEvent event) throws Exception { //this method is used to start the game
+        Grid.deleteBlocks(); //we delete exisitng blocks if there are any
+        Resulttxt.deleteLabel(); //we delete the win or lose label if there is one
         try{
-            Time.stoptimer();
+            Time.stoptimer(); //we stop the timer when a new game begins on top of a running game
         }
         catch(NullPointerException e){
 
         }
         try{
-            Scenario id = Scenario.getScenario(Scenario.filename);
-            Time timer = new Time(id.getScenarioList().get(2), myPane, timeLeftLabel);
-            Grid minesGrid = new Grid(myPane, id.getScenarioList(), flagsLabel);
+            Scenario id = Scenario.getScenario(Scenario.filename); //the last-selected scenario is loaded
+            Time timer = new Time(id.getScenarioList().get(2), myPane, timeLeftLabel); //a new timer is set
+            Grid minesGrid = new Grid(myPane, id.getScenarioList(), flagsLabel); //a new grid is instantiated
             minesGrid.setLayoutX(0);
             minesGrid.setLayoutY(110);
             myPane.getChildren().add(minesGrid);
             totalMinesLabel.setText(Integer.toString(minesGrid.getTotalMines()));
         }
-        catch(ScenarioInstantiationException e){
+        catch(ScenarioInstantiationException e){ //this exception occurs when the user starts the game without having loaded a scenario first
             Stage errorStage = new Stage();
             Label error = new Label("You must load a scenario first!!!");
             error.setFont(Font.font("Verdana", 20));
@@ -77,11 +78,9 @@ public class mainController{
             errorStage.setHeight(200);
 		    errorStage.show();
         }
-
-
     }
 
-    public void exit() throws Exception{
+    public void exit() throws Exception{ //this method is used to open the exit-confirmation window
         Stage exitStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("exitScene.fxml"));
         //with the setcontrollerfactory we can manipulate the constructor of the exitcontroller class
@@ -97,7 +96,7 @@ public class mainController{
 		exitStage.show();
     }
 
-    public void rounds() throws Exception {
+    public void rounds() throws Exception { //this method is used to open the rounds window
         Stage roundsStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("roundsScene.fxml"));
         Scene roundsScene = new Scene(root);
@@ -108,7 +107,7 @@ public class mainController{
 		roundsStage.show();
     }
 
-    public void solution() throws Exception {
+    public void solution() throws Exception { //this method calls the static solution method solution which ends the game
         Grid.solution(myPane);
     }
 }

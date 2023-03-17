@@ -18,7 +18,7 @@ public class Rounds {
      *
      * @param mines    the number of mines in the round
      * @param clicks   the number of clicks made in the round
-     * @param playtime the length of time the round took to complete
+     * @param playtime the length of available time for the round
      * @param result   the result of the round (0 for loss, 1 for win)
      */
     public static void setStats(int mines, int clicks, int playtime, int result) {

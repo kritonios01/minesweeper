@@ -7,6 +7,8 @@ import javafx.animation.KeyFrame;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+
+//A class for a simple timer which is implemented with tha javafx timeline library and a static method to stop the timer when the game ends
 public class Time {
     private int counter;
     private static Timeline currentTimeline;

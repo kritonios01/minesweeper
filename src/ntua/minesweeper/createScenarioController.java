@@ -14,6 +14,7 @@ import javafx.scene.Node;
 
 import java.io.FileWriter;
 
+//A controller for the Create Scenario Window. input values are used to create the appropriate txt file
 public class createScenarioController implements Initializable{
     @FXML private TextField scenarioTextField;
     @FXML private ChoiceBox<String> difficultyChoiceBox;
