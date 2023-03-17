@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -16,6 +17,7 @@ public class Main extends Application{
 	public void start(Stage mainStage) throws Exception {
         mainStage.setTitle("MediaLab Minesweeper"); //give title to window
         mainStage.setResizable(false); //make it unresizable
+		mainStage.getIcons().add(new Image("media/logo.png"));
 
         Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml")); //Load top level nodes (anchor pane with menubar)
         Scene mainScene = new Scene(root); //pass root node to the main scene
