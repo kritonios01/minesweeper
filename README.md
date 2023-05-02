@@ -1,6 +1,6 @@
 # Minesweeper
 
-A simple implementation of the classic Minesweeper game written in Java (and JavaFX). This project was part of the Multimedia Engineering course at 7th semester.
+A simple implementation of the classic Minesweeper game written in Java (and JavaFX). This project was part of the Multimedia Engineering course at 7th semester at Electrical and Computer Engineering School of NTUA.
 
 ## Build Instructions
 
@@ -9,4 +9,4 @@ A simple implementation of the classic Minesweeper game written in Java (and Jav
 2. For VS Code, make sure you have the Extension Pack for Java installed
 3. Change the launch.json and settings.json files in the .vscode directory to match with the directory in which you have JavaFX
 	> Note: For more information about setting up VS Code with JavaFX see [here](https://openjfx.io/openjfx-docs/)
-4. Enjoy
+4. Enjoy!
