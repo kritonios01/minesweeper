@@ -1,9 +1,11 @@
 .DS_Store
 
 /bin
-.vscode/
 todos.rtf
 
-src/medialab/
+src/medialab/*.txt
 src/media/kaboom.mp3
 src/media/bye.mp3
+
+report.pages
+*.pdf
