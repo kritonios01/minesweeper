@@ -1,18 +1,12 @@
-## Getting Started
+# Minesweeper
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+A simple implementation of the classic Minesweeper game written in Java (and JavaFX). This project was part of the Multimedia Engineering course at 7th semester.
 
-## Folder Structure
+## Build Instructions
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+1. Make sure you have Java 17 and JavaFX 17
+	> Note: I used Java v17.0.3.1 and JavaFX v17.0.6
+2. For VS Code, make sure you have the Extension Pack for Java installed
+3. Change the launch.json and settings.json files in the .vscode directory to match with the directory in which you have JavaFX
+	> Note: For more information about setting up VS Code with JavaFX see [here](https://openjfx.io/openjfx-docs/)
+4. Enjoy
