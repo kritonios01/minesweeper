@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ntua.minesweeper.mainController">
+   <children>
+      <MenuBar prefHeight="28.0" prefWidth="700.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Application">
+            <items>
+                  <MenuItem fx:id="createButton" mnemonicParsing="false" onAction="#createScenario" text="Create" />
+                  <MenuItem fx:id="loadButton" mnemonicParsing="false" onAction="#loadScenario" text="Load" />
+                  <MenuItem fx:id="startButton" mnemonicParsing="false" onAction="#start" text="Start" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exit" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Details">
+            <items>
+              <MenuItem fx:id="roundsButton" mnemonicParsing="false" onAction="#rounds" text="Rounds" />
+                  <MenuItem fx:id="solutionButton" mnemonicParsing="false" onAction="#solution" text="Solution" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label fx:id="totalMinesLabel" layoutX="77.0" layoutY="51.0" prefHeight="33.0" prefWidth="44.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="mineImageView" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../media/bomb.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="256.0" layoutY="51.0" text="Time Left:">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLeftLabel" layoutX="388.0" layoutY="51.0" prefHeight="30.0" prefWidth="50.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="flagsLabel" layoutX="650.0" layoutY="48.0" prefHeight="33.0" prefWidth="44.0">
+         <font>
+            <Font name="Verdana" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="flagImageView" fitHeight="50.0" fitWidth="50.0" layoutX="583.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../media/flag2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

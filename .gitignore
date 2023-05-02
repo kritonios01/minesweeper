@@ -1,0 +1,11 @@
+.DS_Store
+
+/bin
+todos.rtf
+
+src/medialab/*.txt
+src/media/kaboom.mp3
+src/media/bye.mp3
+
+report.pages
+*.pdf
